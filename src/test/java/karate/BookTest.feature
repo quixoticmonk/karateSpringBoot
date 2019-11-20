@@ -2,6 +2,7 @@ Feature:
 
   Background:
     * url 'http://localhost:8080/'
+
   @Books
   Scenario: Get all books
     * def responseExpected =
@@ -59,3 +60,18 @@ Feature:
     * method GET
     * status 200
     * match $ == {"name":"1984","author":"George Orwell"}
+
+
+  @Books @Authors
+  Scenario Outline: Validating the scenario outline ( using __num)
+    * def expected = __num==0? '{"name":"1984","author":"George Orwell"}': '{"author":"Jane Austen"}'
+    * path '/api/<endpoint>'
+    * method GET
+    * status 200
+    * match $ contains $expected
+    Examples:
+      | endpoint |
+      | books    |
+      | authors  |
+
+
