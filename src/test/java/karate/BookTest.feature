@@ -1,4 +1,5 @@
-Feature:
+@Books
+Feature: BookTest
 
   Background:
     * url 'http://localhost:8080/'
