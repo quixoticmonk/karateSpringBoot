@@ -4,9 +4,7 @@ function fn() {
     env = 'dev';
   }
   var config = {
-    someUrlBase: 'https://some-host.com/v1/auth/'
-  };
-
-
+    baseUrl: 'http://localhost:8080/'
+  }
   return config;
 }

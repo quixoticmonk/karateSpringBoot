@@ -1,7 +1,8 @@
+@AuthorTest
 Feature:
 
   Background:
-    * url 'http://localhost:8080/'
+    * url baseUrl
 
   @Authors
   Scenario: Validate authors endpoint
