@@ -4,7 +4,7 @@ Feature: BookTest
   Background:
     * url 'http://localhost:8080/'
 
-  @Books
+  @Books @name=perf
   Scenario: Get all books
     * def responseExpected =
     """
