@@ -99,18 +99,10 @@
     </dependencies>
 
     <build>
-       <!-- <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>-->
         <testResources>
             <testResource>
                 <directory>src/test/resources</directory>
             </testResource>
-         <!--   <testResource>
-                <directory>src/test/scala</directory>
-                <excludes>
-                    <exclude>**/*.scala</exclude>
-                </excludes>
-            </testResource>-->
             <testResource>
                 <directory>src/test/java</directory>
                 <excludes>
@@ -152,6 +144,10 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>io.gatling</groupId>

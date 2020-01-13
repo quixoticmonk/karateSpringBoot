@@ -23,4 +23,5 @@ jobs:
 
     steps:
       - checkout
+      - run: mvn spring-boot:run
       - run: mvn clean test -Dtest=TestRunner
