@@ -37,3 +37,6 @@ Feature:
     * def authors = get[0] $.[*].author
     * match authors == 'Dan Brown'
 
+
+
+  #karate.properties['client.secret'] This is the way to pass runtime props
