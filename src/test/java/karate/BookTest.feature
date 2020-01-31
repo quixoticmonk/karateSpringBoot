@@ -2,7 +2,7 @@
 Feature: BookTest
 
   Background:
-    * url 'http://localhost:8080/'
+    * url baseUrl
 
   @Books @name=perf
   Scenario: Get all books
@@ -18,6 +18,24 @@ Feature: BookTest
     {"name":"To Kill a Mockingbird","author":"Harper Lee"}
     ]
     """
+    * path '/api/books'
+    * method GET
+    * status 200
+    * match $ == responseExpected
+
+
+  @Books @name=perf
+  Scenario: Get all books
+    * table responseExpected
+      | name                                             | author             |
+      | 'Angels and Demons'                              | 'Dan Brown'        |
+      | 'Inferno'                                        | 'Dan Brown'        |
+      | "Harry Potter and the Sorcerer's Stone (Book 1)" | 'J. K. Rowling'    |
+      | 'Harry Potter and the Prisoner of Azkaban'       | 'J. K. Rowling'    |
+      | 'The Hobbit'                                     | 'J. R. R. Tolkien' |
+      | '1984'                                           | 'George Orwell'    |
+      | 'Pride and Prejudice '                           | 'Jane Austen'      |
+      | 'To Kill a Mockingbird'                          | 'Harper Lee'       |
     * path '/api/books'
     * method GET
     * status 200
