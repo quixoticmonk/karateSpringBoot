@@ -24,8 +24,8 @@ Feature: BookTest
     * match $ == responseExpected
 
 
-  @Books @name=perf
-  Scenario: Get all books
+  @Books
+  Scenario: Get all books expected in table
     * table responseExpected
       | name                                             | author             |
       | 'Angels and Demons'                              | 'Dan Brown'        |
@@ -36,6 +36,15 @@ Feature: BookTest
       | '1984'                                           | 'George Orwell'    |
       | 'Pride and Prejudice '                           | 'Jane Austen'      |
       | 'To Kill a Mockingbird'                          | 'Harper Lee'       |
+    * path '/api/books'
+    * method GET
+    * status 200
+    * match $ == responseExpected
+
+
+  @Books
+  Scenario: Get all books expected in a csv
+    * def responseExpected = read("books_authors.csv")
     * path '/api/books'
     * method GET
     * status 200
@@ -93,4 +102,9 @@ Feature: BookTest
       | books    |
       | authors  |
 
-
+  @Books
+  Scenario: Fuzzy match structure using api/books/{bookName}
+    * path '/api/books/1984'
+    * method GET
+    * status 200
+    * match $ == {"name":"#string","author":"#string"}
