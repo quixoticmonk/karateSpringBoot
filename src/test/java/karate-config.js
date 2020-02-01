@@ -4,7 +4,8 @@ function fn() {
     env = 'dev';
   }
   var config = {
-    baseUrl: 'http://localhost:8080/'
+    baseUrl: 'http://localhost:8080/',
+    jsonPlaceHolderUrl : "https://jsonplaceholder.typicode.com/"
   }
   if(env=='staging'){
     config.baseUrl='google.com'
