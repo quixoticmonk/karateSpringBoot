@@ -46,4 +46,8 @@ public class BookService {
             }
         }
     }
+
+    public void deleteBook(String name) {
+        books.removeIf(b->b.getName().equals(name));
+    }
 }
