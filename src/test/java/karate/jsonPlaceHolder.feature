@@ -19,5 +19,18 @@ Feature: JsonTests
     * status 200
     * match $ == {"userId": "#number" , "id": "#number", "title": "#string" , "body": "#string"}
 
-
+  Scenario: Validate POST method
+    * def requestInput =
+    """
+    {
+      id: 101,
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    }
+    """
+    * path '/posts'
+    * request requestInput
+    * header Content-type = "application/json; charset=UTF-8"
+    * method POST
 
