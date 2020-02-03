@@ -108,3 +108,18 @@ Feature: BookTest
     * method GET
     * status 200
     * match $ == {"name":"#string","author":"#string"}
+
+
+  @Books
+  Scenario: Validate POST method
+    * path '/api/books'
+    * header Content-Type = "application/json"
+    * request {"name": "Istanbul","author": "Orhan Pamuk"}
+    * method POST
+    * status 200
+    * print $
+    * path '/api/books'
+    * method GET
+    * status 200
+    * match $ contains {"name": "Istanbul","author": "Orhan Pamuk"}
+
