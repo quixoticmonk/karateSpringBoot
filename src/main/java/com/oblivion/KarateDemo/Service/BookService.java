@@ -27,8 +27,7 @@ public class BookService {
     }
 
     public Book getABook(String name) {
-        return
-                books.stream()
+        return  books.stream()
                         .filter(t-> name.equals(t.getName()))
                         .findFirst().get();
     }

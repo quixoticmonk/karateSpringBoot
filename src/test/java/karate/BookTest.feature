@@ -123,3 +123,16 @@ Feature: BookTest
     * status 200
     * match $ contains {"name": "Istanbul","author": "Orhan Pamuk"}
 
+
+  @Books
+  Scenario: Validate DELETE method
+    * path '/api/books/Inferno'
+    * header Content-Type = "application/json"
+    * method DELETE
+    * status 200
+    * print $
+    * path '/api/books'
+    * method GET
+    * status 200
+    * match $ !contains {"name":"Inferno","author":"Dan Brown"}
+
