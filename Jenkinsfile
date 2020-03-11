@@ -2,6 +2,7 @@ pipeline {
   agent any
     tools {
       maven "maven"
+      jdk "jdk"
     }
 
   options {
@@ -15,7 +16,7 @@ pipeline {
   stages {
     stage('Initialize'){
       steps{
-        echo"add steps to verify environment"
+        sh"java -version"
       }
     }
 
