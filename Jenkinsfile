@@ -43,10 +43,6 @@ pipeline {
           dependencyCheckPublisher pattern: ''
       }
     }
-
-    target/gatling/usersimulation-20200312052217542/index.html
-
-
   }
 
   post{
