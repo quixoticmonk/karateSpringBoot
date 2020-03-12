@@ -18,7 +18,11 @@ class TestRunner {
 
     @Karate.Test
     Karate testAll(){
+        Results results = Runner.parallel(getClass(), 1);
+        TestRunner.generateReport(results.getReportDir());
+        assertTrue(results.getErrorMessages(), results.getFailCount() == 0);
         return new Karate().relativeTo(getClass());
+
     }
 
 /*    @Karate.Test

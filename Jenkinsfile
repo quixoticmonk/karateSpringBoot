@@ -46,8 +46,9 @@ pipeline {
             parallel {
                 stage('Karate Tests') {
                     steps {
-                        sh "mvn test-compile surefire:test -Dtest=TestRunner"
-                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
+                        sh "mvn surefire:test -Dtest=TestRunner"
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/cucumber-html-reports', reportFiles: 'overview-features.html', reportName: 'Karate test run report', reportTitles: ''])
+                        //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
                     }
                 }
 
@@ -83,7 +84,6 @@ pipeline {
             echo "BUILD FAILED"
         }
         always {
-            junit allowEmptyResults: true, testResults: 'build/test-results/test/*.xml'
             deleteDir()
         }
     }
