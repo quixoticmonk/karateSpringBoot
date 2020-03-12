@@ -17,6 +17,10 @@ pipeline {
         jdk "jdk"
     }
 
+    environment {
+        scannerHome = tool 'sonar-scanner'
+    }
+
     options {
         disableConcurrentBuilds()
         timeout(time: 1, unit: 'HOURS')
@@ -52,13 +56,11 @@ pipeline {
                 }
 
                 stage('Sonar') {
-                    def scannerHome = tool 'sonar-scanner';
-                    steps {
+
+                    steps{
                         withSonarQubeEnv('sonar') {
-                          sh "${scannerHome}/bin/sonar-scanner"
+                            sh "${scannerHome}/bin/sonar-scanner"
                         }
-
-
                     }
                 }
                 stage('Gatling tests') {
