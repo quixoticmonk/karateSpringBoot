@@ -110,29 +110,5 @@ Feature: BookTest
     * match $ == {"name":"#string","author":"#string"}
 
 
-  @Books
-  Scenario: Validate POST method
-    * path '/api/books'
-    * header Content-Type = "application/json"
-    * request {"name": "Istanbul","author": "Orhan Pamuk"}
-    * method POST
-    * status 200
-    * print $
-    * path '/api/books'
-    * method GET
-    * status 200
-    * match $ contains {"name": "Istanbul","author": "Orhan Pamuk"}
 
-
-  @Books
-  Scenario: Validate DELETE method
-    * path '/api/books/Inferno'
-    * header Content-Type = "application/json"
-    * method DELETE
-    * status 200
-    * print $
-    * path '/api/books'
-    * method GET
-    * status 200
-    * match $ !contains {"name":"Inferno","author":"Dan Brown"}
 
