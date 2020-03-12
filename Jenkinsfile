@@ -48,10 +48,19 @@ pipeline {
                     steps {
                         sh "mvn surefire:test -Dtest=TestRunner"
                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/cucumber-html-reports', reportFiles: 'overview-features.html', reportName: 'Karate test run report', reportTitles: ''])
-                        //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
                     }
                 }
 
+                stage('Sonar) {
+                    def scannerHome = tool 'sonar-scanner';
+                    steps {
+                        withSonarQubeEnv('sonar') {
+                          sh "${scannerHome}/bin/sonar-scanner"
+                        }
+
+
+                    }
+                }
                 stage('Gatling tests') {
                     steps {
                         sh "mvn gatling:test"
