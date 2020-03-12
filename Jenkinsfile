@@ -48,6 +48,16 @@ pipeline {
         }
         stage("Quality Gates") {
             parallel {
+                stage('Unit Tests') {
+                    steps {
+                        echo"Running Unit tests"
+                    }
+                }
+                stage('Running mutation Tests') {
+                    steps {
+                        echo"Running Pit tests"
+                    }
+                }
                 stage('Karate Tests') {
                     steps {
                         sh "mvn surefire:test -Dtest=TestRunner"
@@ -78,7 +88,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to staging') {
             steps {
                 withCredentials([string(credentialsId: 'CF_API', variable: 'CF_API'), string(credentialsId: 'CF_USER', variable: 'CF_USER'), string(credentialsId: 'CF_PASS', variable: 'CF_PASS')]) {
                     sh "cf login -a ${CF_API} -u ${CF_USER} -p ${CF_PASS} -o ${CF_ORG} -s ${CF_SPACE} "
@@ -86,6 +96,34 @@ pipeline {
                 }
             }
         }
+                stage("Post Deploy Gates") {
+            parallel {
+                stage('Karate Tests') {
+                    steps {
+                        sh "mvn surefire:test -Dtest=TestRunner"
+                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/cucumber-html-reports', reportFiles: 'overview-features.html', reportName: 'Karate test run report', reportTitles: ''])
+                    }
+                }
+                stage('Gatling tests') {
+                    steps {
+                        sh "mvn gatling:test"
+                        gatlingArchive()
+                    }
+                }
+
+                stage('Health Check') {
+                    steps {
+                        echo"health check"
+                    }
+                }
+            }
+        }
+        stage('Deploy to Pre-prod') {
+            steps {
+                echo"deploy to pre-prod"
+            }
+        }
+        
     }
     post {
         success {
