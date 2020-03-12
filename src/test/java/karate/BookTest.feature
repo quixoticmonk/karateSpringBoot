@@ -64,6 +64,7 @@ Feature: BookTest
     * def expectedBookNames =
     """
     ["Angels and Demons",
+    "Inferno",
     "Harry Potter and the Sorcerer's Stone (Book 1)",
     "Harry Potter and the Prisoner of Azkaban",
     "The Hobbit","1984","Pride and Prejudice ",
