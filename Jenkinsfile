@@ -33,7 +33,7 @@ pipeline {
 
     stage('Run Gatling tests'){
       steps{
-        sh "mvn clean test-compile gatling:test -Dgatling.simulationClass=UserSimulation.scala"
+        sh "mvn clean test-compile gatling:test -Dgatling.simulationClass=UserSimulation"
       }
     }
     stage('Dependency Check'){
