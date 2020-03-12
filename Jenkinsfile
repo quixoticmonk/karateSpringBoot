@@ -52,6 +52,14 @@ pipeline {
           }
         }
 
+        stage('Deploy'){
+          steps{
+            sh "cf login -a ${CF_API} -u ${CF_USER} -p ${CF_PASS} "
+            sh "cf push -p target/*.jar "
+
+          }
+        }
+
       }
 
     }
