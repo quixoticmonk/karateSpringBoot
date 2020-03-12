@@ -26,7 +26,6 @@ pipeline {
     }
     stage('Run Karate Tests'){
       steps{
-        sh"nohup mvn spring-boot:run &"
         sh "mvn test-compile surefire:test -Dtest=TestRunner"
       }
     }
