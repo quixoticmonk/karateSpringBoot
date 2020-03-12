@@ -27,13 +27,13 @@ pipeline {
     stage('Run Karate Tests'){
       steps{
         sh"nohup mvn spring-boot:run &"
-        sh "mvn surefire:test -Dtest=TestRunner"
+        sh "mvn test-compile surefire:test -Dtest=TestRunner"
       }
     }
 
     stage('Run Gatling tests'){
       steps{
-        sh "mvn clean test-compile gatling:test -Dgatling.simulationClass=UserSimulation"
+        sh "mvn gatling:test -Dgatling.simulationClass=UserSimulation"
       }
     }
     stage('Dependency Check'){
