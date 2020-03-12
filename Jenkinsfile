@@ -24,6 +24,11 @@ pipeline {
           sh "mvn clean compile -DskipTests=true"
       }
     }
+    stage('Compile test classes'){
+      steps{
+        sh "mvn test-compile"
+      }
+    }
     stage("Quality Gates"){
       parallel {
         stage('Karate Tests'){
@@ -36,7 +41,7 @@ pipeline {
         stage('Gatling tests'){
           steps{
             sh "mvn gatling:test"
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/gatling/**/', reportFiles: 'index.html', reportName: 'Gatling analysis report', reportTitles: ''])
+            gatlingArchive()
           }
         }
 
