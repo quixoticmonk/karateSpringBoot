@@ -19,13 +19,23 @@ pipeline {
         sh"java -version"
       }
     }
-
     stage('Build artificat'){
       steps{
-          sh "mvn clean package"
+          sh "mvn clean compile -DskipTests=true"
+      }
+    }
+    stage('Run Karate Tests'){
+      steps{
+        sh"nohup mvn spring-boot:run &"
+        sh "mvn surefire:test -Dtest=TestRunner"
       }
     }
 
+    stage('Run Gatling tests'){
+      steps{
+        sh "mvn clean test-compile gatling:test -Dgatling.simulationClass=UserSimulation.scala"
+      }
+    }
     stage('Dependency Check'){
       steps{
           dependencyCheck additionalArguments: '', odcInstallation: 'depCheck'
