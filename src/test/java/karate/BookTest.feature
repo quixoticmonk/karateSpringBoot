@@ -10,7 +10,6 @@ Feature: BookTest
     """
     [
     {"name":"Angels and Demons","author":"Dan Brown"},
-    {"name":"Inferno","author":"Dan Brown"},
     {"name":"Harry Potter and the Sorcerer's Stone (Book 1)","author":"J. K. Rowling"},
     {"name":"Harry Potter and the Prisoner of Azkaban","author":"J. K. Rowling"},
     {"name":"The Hobbit","author":"J. R. R. Tolkien"},
@@ -29,7 +28,6 @@ Feature: BookTest
     * table responseExpected
       | name                                             | author             |
       | 'Angels and Demons'                              | 'Dan Brown'        |
-      | 'Inferno'                                        | 'Dan Brown'        |
       | "Harry Potter and the Sorcerer's Stone (Book 1)" | 'J. K. Rowling'    |
       | 'Harry Potter and the Prisoner of Azkaban'       | 'J. K. Rowling'    |
       | 'The Hobbit'                                     | 'J. R. R. Tolkien' |
@@ -63,7 +61,7 @@ Feature: BookTest
   Scenario: Validating the jsonPath
     * def expectedBookNames =
     """
-    ["Angels and Demons","Inferno",
+    ["Angels and Demons",
     "Harry Potter and the Sorcerer's Stone (Book 1)",
     "Harry Potter and the Prisoner of Azkaban",
     "The Hobbit","1984","Pride and Prejudice ",
