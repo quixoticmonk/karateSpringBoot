@@ -54,15 +54,6 @@ pipeline {
                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/cucumber-html-reports', reportFiles: 'overview-features.html', reportName: 'Karate test run report', reportTitles: ''])
                     }
                 }
-
-                stage('Sonar') {
-
-                    steps{
-                        withSonarQubeEnv('sonar') {
-                            sh "${scannerHome}/bin/sonar-scanner"
-                        }
-                    }
-                }
                 stage('Gatling tests') {
                     steps {
                         sh "mvn gatling:test"
@@ -78,6 +69,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Sonar') {
+            steps{
+                withSonarQubeEnv('sonar') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 withCredentials([string(credentialsId: 'CF_API', variable: 'CF_API'), string(credentialsId: 'CF_USER', variable: 'CF_USER'), string(credentialsId: 'CF_PASS', variable: 'CF_PASS')]) {
