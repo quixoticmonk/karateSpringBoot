@@ -32,23 +32,13 @@ pipeline {
 
     stage('Run Gatling tests'){
       steps{
-        sh "mvn gatling:test -Dgatling.simulationClass=UserSimulation"
+        sh "mvn gatling:test"
       }
     }
     stage('Dependency Check'){
       steps{
           dependencyCheck additionalArguments: '', odcInstallation: 'depCheck'
           dependencyCheckPublisher pattern: ''
-      }
-    }
-
-    stage('Publish Jacoco Report') {
-      steps {
-        junit '**/target/surefire-reports/**.xml'
-        step([$class: 'JacocoPublisher',
-        execPattern: '**/target/**.exec',
-        classPattern: '**/target/classes',
-        sourcePattern: '**/src/main/java'])
       }
     }
 
