@@ -14,35 +14,45 @@ pipeline {
   }
 
   stages {
-    stage('Initialize'){
+    stage("Initialize"){
       steps{
         sh"java -version"
       }
     }
-    stage('Build artificat'){
+    stage('Build'){
       steps{
           sh "mvn clean compile -DskipTests=true"
       }
     }
-    stage('Run Karate Tests'){
-      steps{
-        sh "mvn test-compile surefire:test -Dtest=TestRunner"
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
+    stage("Quality Gates"){
+      parallelsAlwaysFailFast true
+      parallel {
+        stage('Karate Tests'){
+          steps{
+            sh "mvn test-compile surefire:test -Dtest=TestRunner"
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
+          }
+        }
+
+        stage('Gatling tests'){
+          steps{
+            sh "mvn gatling:test"
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/gatling/**/', reportFiles: 'index.html', reportName: 'Gatling analysis report', reportTitles: ''])
+          }
+        }
+
+        stage('Dependency Check'){
+          steps{
+            dependencyCheck additionalArguments: '', odcInstallation: 'depCheck'
+            dependencyCheckPublisher pattern: ''
+          }
+        }
+
       }
+
     }
 
-    stage('Run Gatling tests'){
-      steps{
-        sh "mvn gatling:test"
-        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/gatling/**/', reportFiles: 'index.html', reportName: 'Gatling analysis report', reportTitles: ''])
-      }
-    }
-    stage('Dependency Check'){
-      steps{
-          dependencyCheck additionalArguments: '', odcInstallation: 'depCheck'
-          dependencyCheckPublisher pattern: ''
-      }
-    }
+
   }
 
   post{
