@@ -27,12 +27,14 @@ pipeline {
     stage('Run Karate Tests'){
       steps{
         sh "mvn test-compile surefire:test -Dtest=TestRunner"
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/surefire-reports/', reportFiles: '*.html', reportName: 'Karate test report', reportTitles: ''])
       }
     }
 
     stage('Run Gatling tests'){
       steps{
         sh "mvn gatling:test"
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/target/gatling/**/', reportFiles: 'index.html', reportName: 'Gatling analysis report', reportTitles: ''])
       }
     }
     stage('Dependency Check'){
@@ -41,6 +43,8 @@ pipeline {
           dependencyCheckPublisher pattern: ''
       }
     }
+
+    target/gatling/usersimulation-20200312052217542/index.html
 
 
   }
