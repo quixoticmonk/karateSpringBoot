@@ -25,7 +25,6 @@ pipeline {
       }
     }
     stage("Quality Gates"){
-      parallelsAlwaysFailFast true
       parallel {
         stage('Karate Tests'){
           steps{
