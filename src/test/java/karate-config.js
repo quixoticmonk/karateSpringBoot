@@ -4,7 +4,7 @@ function fn() {
     env = 'dev';
   }
   var config = {
-    baseUrl: 'http://localhost:8080/',
+    baseUrl: 'http://jenkins-demo.apps.apcf.cihpcf.io/',
     jsonPlaceHolderUrl : "https://jsonplaceholder.typicode.com/"
   }
   if(env=='staging'){
