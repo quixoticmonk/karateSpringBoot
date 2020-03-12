@@ -51,7 +51,7 @@ pipeline {
                     }
                 }
 
-                stage('Sonar) {
+                stage('Sonar') {
                     def scannerHome = tool 'sonar-scanner';
                     steps {
                         withSonarQubeEnv('sonar') {
