@@ -1,3 +1,15 @@
+'''
+################# USER DEFINED VARIABLES###############################
+'''
+def CF_ORG="columbus-apps"
+def CF_SPACE="jenkins-demo"
+def JOB_NAME ="${env.JOB_NAME}".tokenize('/')[0]
+def BRANCH ="${env.JOB_NAME}".tokenize('/')[1]
+def JENKINS_NOTIFICATIONS_TO ="manu.chandrasekhar@accenture.com"
+'''
+################# USER DEFINED VARIABLES###############################
+'''
+
 pipeline {
   agent any
     tools {
@@ -55,8 +67,10 @@ pipeline {
     }
     stage('Deploy'){
       steps{
-        sh "cf login -a ${CF_API} -u ${CF_USER} -p ${CF_PASS} "
-        sh "cf push -p target/*.jar "
+      withCredentials([string(credentialsId: 'CF_API', variable: 'CF_API'),string(credentialsId: 'CF_USER', variable: 'CF_USER'),string(credentialsId: 'CF_PASS', variable: 'CF_PASS')]) {
+          sh "cf login -a ${CF_API} -u ${CF_USER} -p ${CF_PASS} -o ${CF_ORG} -s ${CF_SPACE} "
+          sh "cf push -p target/*.jar "
+        }
       }
     }
   }
